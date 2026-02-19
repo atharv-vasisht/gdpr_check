@@ -15,7 +15,12 @@ export function LogoutButton() {
   };
 
   return (
-    <Button variant="ghost" size="sm" onClick={handleLogout}>
+    <Button
+      variant="ghost"
+      size="sm"
+      onClick={handleLogout}
+      className="h-8 text-[13px] text-muted-foreground hover:text-foreground"
+    >
       Log out
     </Button>
   );

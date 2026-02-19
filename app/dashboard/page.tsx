@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { Navbar } from "@/components/Navbar";
 import { ScanForm } from "@/components/ScanForm";
 import { ScanList } from "@/components/ScanList";
 import { LogoutButton } from "./logout-button";
@@ -23,31 +24,24 @@ export default async function DashboardPage() {
     .limit(50);
 
   return (
-    <div className="min-h-screen">
-      <header className="border-b">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <span className="text-xl font-bold tracking-tight">
-            GDPR QuickScan
-          </span>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground">{user.email}</span>
-            <LogoutButton />
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-muted/20">
+      <Navbar href="/dashboard">
+        <span className="hidden text-[13px] text-muted-foreground sm:block">
+          {user.email}
+        </span>
+        <LogoutButton />
+      </Navbar>
 
-      <main className="container mx-auto px-4 py-8 max-w-4xl space-y-8">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-muted-foreground mt-1">
-            Paste a website URL to scan for GDPR compliance signals
+      <main className="mx-auto max-w-6xl px-6 py-10">
+        <div className="mb-8">
+          <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
+          <p className="mt-1 text-[14px] text-muted-foreground">
+            Scan websites for GDPR compliance signals and review past reports.
           </p>
         </div>
 
-        <ScanForm />
-
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Previous Scans</h2>
+        <div className="space-y-8">
+          <ScanForm />
           <ScanList scans={scans || []} />
         </div>
       </main>

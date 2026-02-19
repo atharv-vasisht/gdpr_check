@@ -50,68 +50,95 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <Link href="/" className="text-xl font-bold tracking-tight mb-2 block">
-            GDPR QuickScan
-          </Link>
-          <CardTitle className="text-2xl">Create an account</CardTitle>
-          <CardDescription>Get started with GDPR QuickScan</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {success ? (
-            <div className="text-center py-4">
-              <p className="text-green-600 font-medium">
-                Account created! Redirecting to dashboard…
-              </p>
-              <p className="text-sm text-muted-foreground mt-2">
-                Check your email if confirmation is required.
-              </p>
+    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-b from-muted/40 via-background to-background">
+      <div className="w-full max-w-sm animate-in">
+        <div className="mb-8 text-center">
+          <Link href="/" className="inline-flex items-center gap-2 transition-opacity hover:opacity-80">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-foreground">
+                <path d="M8 1L2 4.5V11.5L8 15L14 11.5V4.5L8 1Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+                <path d="M8 5V11M5.5 6.5L8 5L10.5 6.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </div>
-          ) : (
-            <>
-              <form onSubmit={handleSignup} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
+            <span className="text-lg font-semibold tracking-tight">GDPR QuickScan</span>
+          </Link>
+        </div>
+
+        <Card className="shadow-lg shadow-black/[0.03] border-border/60">
+          <CardHeader className="space-y-1 pb-4">
+            <CardTitle className="text-xl">Create your account</CardTitle>
+            <CardDescription>Get started with GDPR QuickScan</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {success ? (
+              <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-6 text-center">
+                <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-green-100">
+                  <svg className="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="Min 6 characters"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    minLength={6}
-                    required
-                  />
-                </div>
-                {error && (
-                  <p className="text-sm text-destructive">{error}</p>
-                )}
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Creating account…" : "Sign up"}
-                </Button>
-              </form>
-              <p className="mt-4 text-center text-sm text-muted-foreground">
-                Already have an account?{" "}
-                <Link href="/login" className="text-primary hover:underline">
-                  Log in
-                </Link>
-              </p>
-            </>
-          )}
-        </CardContent>
-      </Card>
+                <p className="font-medium text-green-800">Account created!</p>
+                <p className="mt-1 text-[13px] text-green-600">
+                  Redirecting to dashboard…
+                </p>
+              </div>
+            ) : (
+              <>
+                <form onSubmit={handleSignup} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-[13px]">Email address</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="you@example.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      autoComplete="email"
+                      className="h-10"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="password" className="text-[13px]">Password</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="Min 6 characters"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      minLength={6}
+                      required
+                      autoComplete="new-password"
+                      className="h-10"
+                    />
+                  </div>
+                  {error && (
+                    <div className="rounded-lg border border-destructive/20 bg-destructive/5 px-3 py-2.5 text-[13px] text-destructive">
+                      {error}
+                    </div>
+                  )}
+                  <Button type="submit" className="h-10 w-full rounded-lg text-[13px] shadow-sm" disabled={loading}>
+                    {loading ? (
+                      <span className="flex items-center gap-2">
+                        <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                        Creating account…
+                      </span>
+                    ) : (
+                      "Create account"
+                    )}
+                  </Button>
+                </form>
+                <p className="mt-6 text-center text-[13px] text-muted-foreground">
+                  Already have an account?{" "}
+                  <Link href="/login" className="font-medium text-primary hover:underline">
+                    Sign in
+                  </Link>
+                </p>
+              </>
+            )}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

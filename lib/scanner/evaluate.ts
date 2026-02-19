@@ -45,7 +45,7 @@ export async function evaluateBundle(bundle: EvidenceBundle): Promise<ScanResult
     throw new Error("OPENAI_API_KEY is not configured");
   }
 
-  const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
+  const model = process.env.OPENAI_MODEL || "gpt-4.1-mini";
 
   const compactBundle = {
     input_url: bundle.inputUrl,

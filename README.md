@@ -74,6 +74,34 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Deploy to Vercel
+
+1. **Push your repo** to GitHub.
+
+2. **Import the project** at [vercel.com/new](https://vercel.com/new):
+   - Connect your GitHub repo
+   - Framework Preset: Next.js (auto-detected)
+   - Root Directory: leave default
+
+3. **Add environment variables** in the Vercel dashboard (Settings → Environment Variables):
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `OPENAI_API_KEY`
+   - `OPENAI_MODEL` (optional, defaults to `gpt-4o-mini`)
+
+4. **Deploy** — Vercel will build and deploy. The scan API uses `@sparticuz/chromium` for serverless-compatible browser automation.
+
+**Note:** The scan API has `maxDuration: 60` seconds. On the **Hobby (free) plan**, Vercel limits functions to 10 seconds — scans may time out on long-running sites. Upgrade to **Pro** for 60-second function duration, or scans will be limited to faster sites.
+
+### Deploy via CLI
+
+```bash
+npm i -g vercel
+vercel
+# Follow prompts, add env vars when prompted or in the dashboard
+```
+
 ## Docker Deployment
 
 ### Build and run locally

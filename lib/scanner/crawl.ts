@@ -1,4 +1,4 @@
-import { chromium, type Browser, type Page } from "playwright";
+import { chromium as playwrightChromium, type Browser, type Page } from "playwright-core";
 
 const POLICY_PATH_PATTERNS = [
   /\/privac/i,
@@ -13,6 +13,18 @@ const POLICY_PATH_PATTERNS = [
 const MAX_PAGES = 5;
 const PAGE_TIMEOUT = 15_000;
 
+async function getBrowser() {
+  if (process.env.VERCEL) {
+    const chromium = await import("@sparticuz/chromium");
+    return playwrightChromium.launch({
+      args: chromium.default.args,
+      executablePath: await chromium.default.executablePath(),
+      headless: true,
+    });
+  }
+  return playwrightChromium.launch({ headless: true });
+}
+
 export interface CrawlResult {
   pages: { url: string; html: string; title: string }[];
   discoveredPolicyLinks: string[];
@@ -22,7 +34,7 @@ export async function crawlSite(inputUrl: string): Promise<CrawlResult> {
   let browser: Browser | null = null;
 
   try {
-    browser = await chromium.launch({ headless: true });
+    browser = await getBrowser();
     const context = await browser.newContext({
       userAgent:
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
